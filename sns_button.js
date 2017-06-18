@@ -23,6 +23,6 @@
     selector.append(_a_tag_generator(title, href));
   };
 
-  _set_twitter(d.getElementById('sns_button_twitter'), 'タイトル', 'http://sssss');
+  _set_twitter(d.getElementById('sns_button_twitter'), 'タイトル', 'https://google.com');
   _set_facebook(d.getElementById('sns_button_facebook'), 'タイトル', 'https://google.com');
 })(document);

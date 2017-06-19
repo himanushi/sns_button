@@ -2,65 +2,86 @@
   var
     sns = {
       twitter: {
-        api_path: 'https://twitter.com/intent/tweet',
-        title_param: 'text',
-        url_param: 'url',
-        display: 'シェア'
+        api_path:     'https://twitter.com/intent/tweet',
+        title_param:  'text',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      'シェア'
       },
       facebook: {
-        api_path: 'https://www.facebook.com/share.php',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'シェア'
+        api_path:     'https://www.facebook.com/share.php',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'シェア'
       },
       google: {
-        api_path: 'https://plus.google.com/share',
-        url_param: 'url',
-        display: '+1'
+        api_path:     'https://plus.google.com/share',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      '+1'
       },
       hatena: {
-        api_path: 'https://b.hatena.ne.jp/add',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'ブクマ'
+        api_path:     'https://b.hatena.ne.jp/add',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   false,
+        display:      'ブクマ'
       },
       pocket: {
-        api_path: 'https://getpocket.com/edit',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'Pocket'
+        api_path:     'https://getpocket.com/edit',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'Pocket'
       },
       line: {
-        api_path: 'https://line.me/R/msg/text/?',
-        display: 'Line'
+        api_path:     'https://line.me/R/msg/text/?',
+        title_encode: false,
+        url_encode:   false,
+        url_param:    '',
+        display:      'Line'
       },
       slack: {
-        api_path: 'http://slackbutton.herokuapp.com/post/new/',
-        url_param: 'url',
-        display: 'シェア'
+        api_path:     'http://slackbutton.herokuapp.com/post/new/',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'シェア'
       },
       mixi: {
-        api_path: 'https://mixi.jp/recent_voice.pl',
-        url_param: 'status',
-        display: 'つぶやく'
+        api_path:     'https://mixi.jp/recent_voice.pl',
+        url_param:    'status',
+        title_encode: false,
+        url_encode:   false,
+        display:      'つぶやく'
       },
       chatwork: {
-        api_path: 'https://www.chatwork.com/packages/share/new.php',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'シェア'
+        api_path:     'https://www.chatwork.com/packages/share/new.php',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   true,
+        display:      'シェア'
       },
       evernote: {
-        api_path: 'https://www.evernote.com/noteit.action',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'clip'
+        api_path:     'https://www.evernote.com/noteit.action',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      'clip'
       },
       feedly: {
-        api_path: 'https://feedly.com/i/subscription/feed/' + origin + '/feed',
-        title_param: 'title',
-        url_param: 'url',
-        display: 'シェア'
+        api_path:     'https://feedly.com/i/subscription/feed/' + origin + '/feed',
+        title_encode: false,
+        url_encode:   false,
+        display:      'シェア'
       }
     };
 

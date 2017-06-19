@@ -77,6 +77,13 @@
     selector.append(_a_tag_generator(title, href));
   };
 
+  _set_evernote = function (selector, title, url) {
+    var
+      href = 'https://www.evernote.com/noteit.action?title=' + title + '&url=' + url;
+
+    selector.append(_a_tag_generator(title, href));
+  };
+
   _init = function () {
     _set_twitter(d.getElementById('sns_button_twitter'), 'ツイッター', 'https://google.com');
     _set_facebook(d.getElementById('sns_button_facebook'), '顔本', 'https://google.com');
@@ -87,6 +94,7 @@
     _set_slack(d.getElementById('sns_button_slack'), 'slack', 'https://google.com');
     _set_mixi(d.getElementById('sns_button_mixi'), 'mixi', 'https://google.com');
     _set_chatwork(d.getElementById('sns_button_chatwork'), 'chatwork', 'https://google.com');
+    _set_evernote(d.getElementById('sns_button_evernote'), 'evernote', 'https://google.com');
   };
 
   _init();

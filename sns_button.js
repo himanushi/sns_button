@@ -1,3 +1,7 @@
+/*!
+ * https://himakan.net/tool/sns_button_js
+ * MIT license
+ */
 ( function ( d, location ) {
 
   "use strict";
@@ -11,7 +15,7 @@
 
     sns_all = {
       twitter: {
-        api_path:     'https://twitter.com/intent/tweet',
+        api_path:     'https://twitter.com/intent/tweet?',
         title_param:  'text',
         url_param:    'url',
         title_encode: false,
@@ -19,7 +23,7 @@
         display:      'Twitter'
       },
       facebook: {
-        api_path:     'https://www.facebook.com/share.php',
+        api_path:     'https://www.facebook.com/share.php?',
         title_param:  'title',
         url_param:    'u',
         title_encode: false,
@@ -27,14 +31,14 @@
         display:      'Facebook'
       },
       google: {
-        api_path:     'https://plus.google.com/share',
+        api_path:     'https://plus.google.com/share?',
         url_param:    'url',
         title_encode: false,
         url_encode:   false,
         display:      'Google+'
       },
       hatena: {
-        api_path:     'https://b.hatena.ne.jp/add',
+        api_path:     'https://b.hatena.ne.jp/add?',
         title_param:  'title',
         url_param:    'url',
         title_encode: true,
@@ -42,7 +46,7 @@
         display:      'はてブ'
       },
       pocket: {
-        api_path:     'https://getpocket.com/edit',
+        api_path:     'https://getpocket.com/edit?',
         title_param:  'title',
         url_param:    'url',
         title_encode: false,
@@ -57,21 +61,21 @@
         display:      'Line'
       },
       slack: {
-        api_path:     'http://slackbutton.herokuapp.com/post/new/',
+        api_path:     'http://slackbutton.herokuapp.com/post/new/?',
         url_param:    'url',
         title_encode: false,
         url_encode:   true,
         display:      'Slack'
       },
       mixi: {
-        api_path:     'https://mixi.jp/recent_voice.pl',
+        api_path:     'https://mixi.jp/recent_voice.pl?',
         url_param:    'status',
         title_encode: false,
         url_encode:   false,
         display:      'mixi'
       },
       chatwork: {
-        api_path:     'https://www.chatwork.com/packages/share/new.php',
+        api_path:     'https://www.chatwork.com/packages/share/new.php?',
         title_param:  'title',
         url_param:    'url',
         title_encode: true,
@@ -79,7 +83,7 @@
         display:      'ChatWork'
       },
       evernote: {
-        api_path:     'https://www.evernote.com/noteit.action',
+        api_path:     'https://www.evernote.com/noteit.action?',
         title_param:  'title',
         url_param:    'url',
         title_encode: false,
@@ -91,6 +95,34 @@
         title_encode: false,
         url_encode:   false,
         display:      'Feedly'
+      },
+      linkedin: {
+        api_path:     'https://www.linkedin.com/cws/share?',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   true,
+        display:      'LinkedIn'
+      },
+      skype: {
+        api_path:     'https://web.skype.com/share?',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'Skype'
+      },
+      tumblr: {
+        api_path:     'https://www.tumblr.com/widgets/share/tool?',
+        title_param:  'caption',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   true,
+        display:      'Tumblr'
+      },
+      rss: {
+        api_path:     origin + '/feed',
+        title_encode: false,
+        url_encode:   false,
+        display:      'rss'
       }
     },
 
@@ -109,10 +141,8 @@
       var
         title = sns.title_encode ? encodeURIComponent( site_title )    : site_title,
         url   = sns.url_encode   ? encodeURIComponent( pure_location ) : pure_location,
-        href,
+        href  = sns.api_path,
         params = '';
-
-      href = sns.api_path + '?';
 
       params += sns.title_param ? sns.title_param + '=' + title : '';
       params += '' !== params   ? '&' : '';

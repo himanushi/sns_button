@@ -1,109 +1,146 @@
-(function (d) {
-  _a_tag_generator = function (title, href) {
-    var
-      a = d.createElement('a');
-    a.setAttribute('href', href);
-    a.setAttribute('target', '_blank');
-    a.innerHTML = title;
-    return a;
-  };
+( function ( d, location ) {
 
-  _set_twitter = function (selector, title, url) {
-    var
-      href = 'https://twitter.com/intent/tweet?text=' + title + '&url=' + url;
+  "use strict";
 
-    selector.append(_a_tag_generator(title, href));
-  };
+  var
+    origin = location.origin,
 
-  _set_facebook = function (selector, title, url) {
-    var
-      encode_url = encodeURIComponent(url),
-      href = 'https://www.facebook.com/share.php?title=' + title + '&u=' + encode_url;
+    pure_location = location.href.replace( /\?.*$/, '' ),
 
-    selector.append(_a_tag_generator(title, href));
-  };
+    site_title = d.title,
 
-  _set_google = function (selector, title, url) {
-    var
-      href = 'https://plus.google.com/share?url=' + url;
+    sns_all = {
+      twitter: {
+        api_path:     'https://twitter.com/intent/tweet',
+        title_param:  'text',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      'Twitter'
+      },
+      facebook: {
+        api_path:     'https://www.facebook.com/share.php',
+        title_param:  'title',
+        url_param:    'u',
+        title_encode: false,
+        url_encode:   true,
+        display:      'Facebook'
+      },
+      google: {
+        api_path:     'https://plus.google.com/share',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      'Google+'
+      },
+      hatena: {
+        api_path:     'https://b.hatena.ne.jp/add',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   false,
+        display:      'はてブ'
+      },
+      pocket: {
+        api_path:     'https://getpocket.com/edit',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'Pocket'
+      },
+      line: {
+        api_path:     'https://line.me/R/msg/text/?',
+        title_encode: false,
+        url_encode:   false,
+        url_param:    '',
+        display:      'Line'
+      },
+      slack: {
+        api_path:     'http://slackbutton.herokuapp.com/post/new/',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   true,
+        display:      'Slack'
+      },
+      mixi: {
+        api_path:     'https://mixi.jp/recent_voice.pl',
+        url_param:    'status',
+        title_encode: false,
+        url_encode:   false,
+        display:      'mixi'
+      },
+      chatwork: {
+        api_path:     'https://www.chatwork.com/packages/share/new.php',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: true,
+        url_encode:   true,
+        display:      'ChatWork'
+      },
+      evernote: {
+        api_path:     'https://www.evernote.com/noteit.action',
+        title_param:  'title',
+        url_param:    'url',
+        title_encode: false,
+        url_encode:   false,
+        display:      'Evernote'
+      },
+      feedly: {
+        api_path:     'https://feedly.com/i/subscription/feed/' + origin + '/feed',
+        title_encode: false,
+        url_encode:   false,
+        display:      'Feedly'
+      }
+    },
 
-    selector.append(_a_tag_generator(title, href));
-  };
+    _a_tag_generator = function ( title, href ) {
+      var
+        a = d.createElement( 'a' );
 
-  _set_hatena = function (selector, title, url) {
-    var
-      encode_title = encodeURIComponent(title),
-      href = 'https://b.hatena.ne.jp/add?title=' + encode_title + '&url=' + url;
+      a.setAttribute( 'href', href );
+      a.setAttribute( 'target', '_blank' );
+      a.innerHTML = title;
 
-    selector.append(_a_tag_generator(title, href));
-  };
+      return a;
+    },
 
-  _set_pocket = function (selector, title, url) {
-    var
-      encode_url = encodeURIComponent(url),
-      href = 'http://getpocket.com/edit?title=' + title + '&url=' + encode_url;
+    _href_generator = function ( sns ) {
+      var
+        title = sns.title_encode ? encodeURIComponent( site_title )    : site_title,
+        url   = sns.url_encode   ? encodeURIComponent( pure_location ) : pure_location,
+        href,
+        params = '';
 
-    selector.append(_a_tag_generator(title, href));
-  };
+      href = sns.api_path + '?';
 
-  _set_line = function (selector, title, url) {
-    var
-      href = 'https://line.me/R/msg/text/?' + url;
+      params += sns.title_param ? sns.title_param + '=' + title : '';
+      params += '' !== params   ? '&' : '';
+      params += sns.url_param ? sns.url_param + '=' + url : '';
 
-    selector.append(_a_tag_generator(title, href));
-  };
+      return href + params;
+    },
 
-  _set_slack = function (selector, title, url) {
-    var
-      encode_url = encodeURIComponent(url),
-      href = 'http://slackbutton.herokuapp.com/post/new/?url=' + encode_url;
+    _set_a_tag = function ( selector, sns ) {
+      var
+        href = _href_generator( sns ),
+        a_tag = _a_tag_generator( sns.display, href );
 
-    selector.append(_a_tag_generator(title, href));
-  };
+      selector.append( a_tag );
+    },
 
-  _set_mixi = function (selector, title, url) {
-    var
-      href = 'http://mixi.jp/recent_voice.pl?status=' + title + '%20' + url;
+    _init = function () {
+      var
+        sns_prefix = 'sns_button_', selectors, i;
 
-    selector.append(_a_tag_generator(title, href));
-  };
+      for ( i in  sns_all ) {
+        selectors = d.getElementsByClassName( sns_prefix + i );
 
-  _set_chatwork = function (selector, title, url) {
-    var
-      encode_title = encodeURIComponent(title),
-      encode_url = encodeURIComponent(url),
-      href = 'https://www.chatwork.com/packages/share/new.php?title=' + encode_title + '&url=' + encode_url;
-
-    selector.append(_a_tag_generator(title, href));
-  };
-
-  _set_evernote = function (selector, title, url) {
-    var
-      href = 'https://www.evernote.com/noteit.action?title=' + title + '&url=' + url;
-
-    selector.append(_a_tag_generator(title, href));
-  };
-
-  _set_feedly = function (selector, title, origin_url) {
-    var
-      href = 'https://feedly.com/i/subscription/feed/' + origin_url + '/feed';
-
-    selector.append(_a_tag_generator(title, href));
-  };
-
-  _init = function () {
-    _set_twitter(d.getElementById('sns_button_twitter'), 'ツイッター', 'https://google.com');
-    _set_facebook(d.getElementById('sns_button_facebook'), '顔本', 'https://google.com');
-    _set_google(d.getElementById('sns_button_google'), 'Google', 'https://himakan.net');
-    _set_hatena(d.getElementById('sns_button_hatena'), 'はてブ', 'https://google.com');
-    _set_pocket(d.getElementById('sns_button_pocket'), 'ポケット', 'https://google.com');
-    _set_line(d.getElementById('sns_button_line'), 'Line', 'https://google.com');
-    _set_slack(d.getElementById('sns_button_slack'), 'slack', 'https://google.com');
-    _set_mixi(d.getElementById('sns_button_mixi'), 'mixi', 'https://google.com');
-    _set_chatwork(d.getElementById('sns_button_chatwork'), 'chatwork', 'https://google.com');
-    _set_evernote(d.getElementById('sns_button_evernote'), 'evernote', 'https://google.com');
-    _set_feedly(d.getElementById('sns_button_feedly'), 'feedly', 'https://himakan.net');
-  };
+        Array.prototype.forEach.call( selectors, function( selector ) {
+          _set_a_tag( selector, sns_all[ i ] );
+        });
+      }
+    };
 
   _init();
-})(document);
+})( document, window.location );

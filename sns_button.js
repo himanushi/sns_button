@@ -16,7 +16,7 @@
         url_param:    'url',
         title_encode: false,
         url_encode:   false,
-        display:      'シェア'
+        display:      'Twitter'
       },
       facebook: {
         api_path:     'https://www.facebook.com/share.php',
@@ -24,14 +24,14 @@
         url_param:    'u',
         title_encode: false,
         url_encode:   true,
-        display:      'シェア'
+        display:      'Facebook'
       },
       google: {
         api_path:     'https://plus.google.com/share',
         url_param:    'url',
         title_encode: false,
         url_encode:   false,
-        display:      '+1'
+        display:      'Google+'
       },
       hatena: {
         api_path:     'https://b.hatena.ne.jp/add',
@@ -39,7 +39,7 @@
         url_param:    'url',
         title_encode: true,
         url_encode:   false,
-        display:      'ブクマ'
+        display:      'はてブ'
       },
       pocket: {
         api_path:     'https://getpocket.com/edit',
@@ -61,14 +61,14 @@
         url_param:    'url',
         title_encode: false,
         url_encode:   true,
-        display:      'シェア'
+        display:      'Slack'
       },
       mixi: {
         api_path:     'https://mixi.jp/recent_voice.pl',
         url_param:    'status',
         title_encode: false,
         url_encode:   false,
-        display:      'つぶやく'
+        display:      'mixi'
       },
       chatwork: {
         api_path:     'https://www.chatwork.com/packages/share/new.php',
@@ -76,7 +76,7 @@
         url_param:    'url',
         title_encode: true,
         url_encode:   true,
-        display:      'シェア'
+        display:      'ChatWork'
       },
       evernote: {
         api_path:     'https://www.evernote.com/noteit.action',
@@ -84,15 +84,15 @@
         url_param:    'url',
         title_encode: false,
         url_encode:   false,
-        display:      'clip'
+        display:      'Evernote'
       },
       feedly: {
         api_path:     'https://feedly.com/i/subscription/feed/' + origin + '/feed',
         title_encode: false,
         url_encode:   false,
-        display:      'シェア'
+        display:      'Feedly'
       }
-    };
+    },
 
   _a_tag_generator = function ( title, href ) {
     var

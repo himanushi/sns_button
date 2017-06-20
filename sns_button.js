@@ -1,4 +1,7 @@
 ( function ( d, location ) {
+
+  "use strict";
+
   var
     origin = location.origin,
 

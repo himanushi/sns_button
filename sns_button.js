@@ -94,37 +94,53 @@
       }
     },
 
-  _a_tag_generator = function ( title, href ) {
-    var
-      a = d.createElement( 'a' );
+    _a_tag_generator = function ( title, href ) {
+      var
+        a = d.createElement( 'a' );
 
-    a.setAttribute( 'href', href );
-    a.setAttribute( 'target', '_blank' );
-    a.innerHTML = title;
+      a.setAttribute( 'href', href );
+      a.setAttribute( 'target', '_blank' );
+      a.innerHTML = title;
 
-    return a;
-  };
+      return a;
+    },
 
-  _set_a_tag = function ( selector, sns ) {
-    var
-      title = sns.title_encode ? encodeURIComponent( site_title )    : site_title,
-      url   = sns.url_encode   ? encodeURIComponent( pure_location ) : pure_location,
-      href  = sns.api_path + '?' + sns.title_param + '=' + title + '&' + sns.url_param + '=' + url;
+    _href_generator = function ( sns ) {
+      var
+        title = sns.title_encode ? encodeURIComponent( site_title )    : site_title,
+        url   = sns.url_encode   ? encodeURIComponent( pure_location ) : pure_location,
+        href,
+        params = '';
 
-    selector.append(_a_tag_generator(sns.display, href));
-  };
+      href = sns.api_path + '?';
 
-  _init = function () {
-    var
-      sns_prefix = 'sns_button_';
+      params += sns.title_param ? sns.title_param + '=' + title : '';
+      params += '' !== params   ? '&' : '';
+      params += sns.url_param ? sns.url_param + '=' + url : '';
 
-    for ( s in sns_all ) {
-      selector = d.getElementById( sns_prefix + s );
-      if ( selector ) {
-        _set_a_tag( selector, sns_all[ s ] )
+      return href + params;
+    },
+
+    _set_a_tag = function ( selector, sns ) {
+      var
+        href = _href_generator( sns ),
+        a_tag = _a_tag_generator( sns.display, href );
+
+      selector.append( a_tag );
+    },
+
+    _init = function () {
+      var
+        sns_prefix = 'sns_button_', selectors, i;
+
+      for ( i in  sns_all ) {
+        selectors = d.getElementsByClassName( sns_prefix + i );
+
+        Array.prototype.forEach.call( selectors, function( selector ) {
+          _set_a_tag( selector, sns_all[ i ] );
+        });
       }
-    }
-  };
+    };
 
   _init();
 })( document, window.location );

@@ -18,7 +18,7 @@
         api_path:     'https://twitter.com/intent/tweet?',
         title_param:  'text',
         url_param:    'url',
-        title_encode: false,
+        title_encode: true,
         url_encode:   false,
         display:      'Twitter'
       },
@@ -58,7 +58,7 @@
         title_encode: false,
         url_encode:   false,
         url_param:    '',
-        display:      'Line'
+        display:      'LINE'
       },
       slack: {
         api_path:     'http://slackbutton.herokuapp.com/post/new/?',

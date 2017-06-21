@@ -4,7 +4,7 @@ ul.sns_button{
 }
 ul.sns_button li{
 	float:left;
-	width:calc(100%/5);
+	width:calc(100%/4);
 	margin:0 0 1%;
 	list-style:none;
 }

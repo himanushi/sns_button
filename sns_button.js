@@ -146,7 +146,7 @@
 
       params += sns.title_param ? sns.title_param + '=' + title : '';
       params += '' !== params   ? '&' : '';
-      params += sns.url_param ? sns.url_param + '=' + url : '';
+      params += sns.url_param ? sns.url_param + '=' + url : ( '' === sns.url_param ? url : '' );
 
       return href + params;
     },
